@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             image 'maven:3-alpine'
-            args '-v /root/.m2:/cygdrive/c/users/a03f/.m2'
+            args '-v /root/.m2:/cygdrive/c/users/a03f/.m2 -Xmx 512'
         }
     }
     stages {
