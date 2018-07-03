@@ -1,7 +1,7 @@
 node {
 
 	stage("Checkout") {
-		checkout([$class: 'GitSCM', branches: [[name: '${branch_or_tag}']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'vbigiani-github', url: 'https://github.com/vbigiani/sonarqube.git']]])
+		checkout([$class: 'GitSCM', branches: [[name: 'master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'vbigiani-github', url: 'https://github.com/vbigiani/sonarqube.git']]])
 	}
 
 	stage("Build") {
