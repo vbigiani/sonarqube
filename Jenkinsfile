@@ -1,34 +1,35 @@
-node {
-
-	stage("Checkout") {
-		checkout([$class: 'GitSCM', branches: [[name: 'master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'vbigiani-github', url: 'https://github.com/vbigiani/sonarqube.git']]])
-	}
-
-	stage("Build") {
-		withMaven(maven:'maven-3.3.9',
-				  mavenSettingsConfig: 'maven-3.3.9-settings.xml',
-				  mavenOpts: '-Xmx512m -XX:MaxPermSize=1024m')
-				{
-					  sh "mvn clean install"
-				}
-	}
-
-	stage("Sonarqube Quality Check") {
-		withMaven(maven:'maven-3.3.9',
-				  mavenSettingsConfig: 'maven-3.3.9-settings.xml',
-				  mavenOpts: '-Xmx512m -XX:MaxPermSize=1024m')
-				{
-					 sh "mvn sonar:sonar"
-				}
-	}
-
-	stage("Deploy") {
-		withMaven(maven:'maven-3.3.9',
-				  mavenSettingsConfig: 'maven-3.3.9-settings.xml',
-				  mavenOpts: '-Xmx512m -XX:MaxPermSize=1024m')
-				{
-				  sh "mvn deploy"
-				}
-	}
+pipeline {
+    agent {
+        docker {
+            image 'maven:3-alpine'
+            args '-v /root/.m2:/root/.m2'
+        }
+    }
+    stages {
+        stage('Build') {
+            steps {
+                sh 'mvn -B -DskipTests clean package'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+            post {
+                always {
+                    junit 'target/surefire-reports/*.xml'
+                }
+            }
+        }
+        stage('Sonarqube') {
+            steps {
+                sh 'mvn sonar:sonar'
+            }
+        }
+        stage('Deliver') { 
+            steps {
+                sh 'mvn deploy' 
+            }
+        }
+    }
 }
-	
