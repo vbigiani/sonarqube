@@ -29,12 +29,14 @@ pipeline {
             }
         }
         stage("Quality Gate"){
+        	agent none
             steps {
                 timeout(time: 1, unit: 'HOURS') {
-                    def qualitygate = waitForQualityGate()
-                    if (qualitygate.status != "OK") {
-                        error "Pipeline aborted due to quality gate coverage failure: ${qualitygate.status}"
-                    }
+                    // Parameter indicates whether to set pipeline to UNSTABLE if Quality Gate fails
+                    // true = set pipeline to UNSTABLE, false = don't
+                    // Requires SonarQube Scanner for Jenkins 2.7+
+                    waitForQualityGate abortPipeline: true
+                    echo qg
                 }
             }
 		}
