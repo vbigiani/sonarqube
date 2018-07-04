@@ -16,6 +16,6 @@ public class GreetingTests {
 
 	@Test
 	public void testGreeting() {
-		Assert.assertEquals("Hello world", greeting.getGreeting());
+		Assert.assertEquals("http://www.google.com?password=P4$$w0rd&userName=userName", greeting.getGreeting());
 	}
 }
