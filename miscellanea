@@ -10,10 +10,10 @@ docker-compose up
 
 su Jenkins installare i plugin di default, blue ocean, sonarqube scanner
 
-su Jenkins configurare il collegamento verso sonarqube (si chiami localhost)
+su Jenkins configurare il collegamento verso sonarqube (si chiami localhost, con URL http://192.168.99.100:9000 )
 
 su sonarqube installare i plugin dei linguaggi
 
-su Sonarqube inserire webhook verso Jenkins (url: http://localhost:8080/sonarqube-webhook/ )
+su Sonarqube inserire webhook verso Jenkins (url: http://192.168.99.100:8080/sonarqube-webhook/ )
 
 su Jenkins creare una pipeline da SCM GIT
