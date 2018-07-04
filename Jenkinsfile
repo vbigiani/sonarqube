@@ -23,7 +23,7 @@ pipeline {
         }
         stage('Sonarqube') {
             steps {
-                withSonarQubeEnv('localhost') {
+                withSonarQubeEnv('Localhost') {
 					sh 'mvn sonar:sonar'
                 }
             }
