@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             image 'maven:3-alpine'
-            args '-v /root/.m2:/cygdrive/c/users/a03f/.m2 -e JAVA_OPTS="-XX:MaxPermSize=512m -Xms512m -Xmx1024m"'
+            args '-v /root/.m2:$HOME/.m2'
         }
     }
     stages {
