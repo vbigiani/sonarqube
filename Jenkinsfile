@@ -13,7 +13,7 @@ pipeline {
         }
         stage('Test') {
             steps {
-                sh 'mvn -eX test'
+                sh 'mvn -e -X test'
             }
             post {
                 always {
