@@ -23,7 +23,9 @@ pipeline {
         }
         stage('Sonarqube') {
             steps {
-                sh 'mvn sonar:sonar'
+                withSonarQubeEnv('localhost') {
+					sh 'mvn sonar:sonar'
+                }
             }
         }
         stage("Quality Gate"){

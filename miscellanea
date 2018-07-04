@@ -1,10 +1,16 @@
 installare Docker (e' una macchina virtuale)
 
+su localhost installare SQL Server >= 2014; creare database `sonar' (con collation Latin_CS_AS)
+e utente/pass SONARQUBE. verificare sia contattabile sulle reti create da Virtualbox, non solo
+su localhost
+
 configurare le reti (192.168.56.0 e' la bridge, 192.168.99.0 la Host Only)
 
 docker-compose up
 
 su Jenkins installare i plugin di default, blue ocean, sonarqube scanner
+
+su Jenkins configurare il collegamento verso sonarqube (si chiami localhost)
 
 su sonarqube installare i plugin dei linguaggi
 
