@@ -1,0 +1,35 @@
+version: "3"
+
+services:
+  jenkins:
+    image: jenkins:latest
+    privileged: true
+    user: root
+    ports:
+      - 8080:8080
+    volumes:
+        - jenkins-data:/var/jenkins_home
+        - /var/run/docker.sock:/var/run/docker.sock
+        - /usr/local/bin/docker:/usr/local/bin/docker
+  sonarqube:
+    image: sonarqube
+    ports:
+      - "9000:9000"
+      - "9092:9092"
+    environment:
+      - SONARQUBE_JDBC_URL=jdbc:sqlserver://192.168.56.1;databaseName=sonar
+      - SONARQUBE_JDBC_USERNAME=SONARQUBE
+      - SONARQUBE_JDBC_PASSWORD=SONARQUBE
+    volumes:
+      - sonarqube_conf:/var/sonarqube/conf
+      - sonarqube_data:/var/sonarqube/data
+      - sonarqube_extensions:/var/sonarqube/extensions
+      - sonarqube_bundled-plugins:/var/sonarqube/lib/bundled-plugins
+
+volumes:
+  jenkins-data:
+  sonarqube_conf:
+  sonarqube_data:
+  sonarqube_extensions:
+  sonarqube_bundled-plugins:
+  
