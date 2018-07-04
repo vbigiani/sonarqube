@@ -1,0 +1,10 @@
+server:
+  port: 9091
+  id: local
+
+spring:
+  application:
+    name: sonarqube
+info.app:
+  name: Sonarqube POC
+  version: 0.0.1
