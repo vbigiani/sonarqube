@@ -1,4 +1,4 @@
-installare Docker (e' una macchina virtuale)
+installare Docker (e' una macchina virtuale VirtualBox). Aumentare la RAM da 1 a 4 GB.
 
 su localhost installare SQL Server >= 2014; creare database `sonar' (con collation Latin_CS_AS)
 e utente/pass SONARQUBE. verificare sia contattabile sulle reti create da Virtualbox, non solo
