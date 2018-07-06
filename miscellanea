@@ -14,7 +14,9 @@ quando si riavvia virtualbox va eseguito:
 	minishift ssh docker start origin
 
 
-su openshift creare progetto gft-dev; installare da catalogo Jenkins, installare inoltre sonarqube.yaml.
+su openshift creare progetto gft-dev; installare Jenkins.yaml e sonarqube.yaml.
+
+per fare login su Jenkins visualizzare i log su Openshift per trovare la password.
 
 -----------------------------------
 
