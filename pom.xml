@@ -92,7 +92,7 @@
 			</activation>
 			<properties>
 				<sonar.host.url>
-					http://192.168.99.100:9000
+					http://sonarqube-gft-dev.192.168.99.100.nip.io/
 				</sonar.host.url>
 			</properties>
 		</profile>

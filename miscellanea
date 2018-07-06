@@ -1,12 +1,22 @@
-installare Docker (e' una macchina virtuale VirtualBox). Aumentare la RAM da 1 a 4 GB.
+Installazione Openshift-Origin:
 
-su localhost installare SQL Server >= 2014; creare database `sonar' (con collation Latin_CS_AS)
-e utente/pass SONARQUBE. verificare sia contattabile sulle reti create da Virtualbox, non solo
-su localhost
+- installare Virtualbox
 
-configurare le reti (192.168.56.0 e' la bridge, 192.168.99.0 la Host Only)
+Installare Minishift
 
-docker-compose up
+minishift config set vm-driver virtualbox
+
+minishift start
+
+modificare in Virtualbox per portare la RAM a 4 GB
+
+quando si riavvia virtualbox va eseguito:
+	minishift ssh docker start origin
+
+
+su openshift creare progetto gft-dev; installare da catalogo Jenkins, installare inoltre sonarqube.yaml.
+
+-----------------------------------
 
 su Jenkins installare i plugin di default, blue ocean, sonarqube scanner
 
@@ -14,6 +24,6 @@ su Jenkins configurare il collegamento verso sonarqube (si chiami Localhost, con
 
 su sonarqube installare i plugin dei linguaggi
 
-su Sonarqube inserire webhook verso Jenkins (url: http://192.168.99.100:8080/sonarqube-webhook/ )
+su Sonarqube inserire webhook verso Jenkins (url: https://jenkins-gft-dev.192.168.99.100.nip.io/sonarqube-webhook/ )
 
 su Jenkins creare una pipeline da SCM GIT
