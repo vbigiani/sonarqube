@@ -4,9 +4,9 @@ Installazione Openshift-Origin:
 
 Installare Minishift
 
-minishift config set vm-driver virtualbox
-
-minishift start
+	minishift config set vm-driver virtualbox
+	
+	minishift start
 
 modificare in Virtualbox per portare la RAM a 4 GB
 
@@ -14,7 +14,21 @@ quando si riavvia virtualbox va eseguito:
 	minishift ssh docker start origin
 
 
-su openshift creare progetto gft-dev; installare Jenkins.yaml e sonarqube.yaml.
+
+su openshift creare progetto gft-dev;
+
+	minishift ssh
+	docker exec origin oc project gft-jenkins
+	docker exec origin oc create serviceaccount privilegeduser
+	docker exec origin oc adm policy add-scc-to-user privileged -z privilegeduser
+	
+	docker exec origin oc adm policy add-cluster-role-to-user cluster-admin admin
+	
+	docker exec origin oc adm policy add-scc-to-user privileged default
+
+
+
+installare Jenkins.yaml e sonarqube.yaml.
 
 per fare login su Jenkins visualizzare i log su Openshift per trovare la password.
 
