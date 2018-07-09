@@ -1,6 +1,6 @@
 #!/bin/bash
 
-docker --tlsverify=false login 192.168.56.100
+echo Use DockerHub credentials
 
-docker --tlsverify=false build -t gft/jenkins .
+docker build -t gft/jenkins .
 

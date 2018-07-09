@@ -15,7 +15,7 @@ objects:
   metadata:
     name: jenkins
   spec:
-    dockerImageRepository: docker.io/jenkinsci/blueocean
+    dockerImageRepository: gft/jenkins
 - apiVersion: v1
   kind: Service
   metadata:
