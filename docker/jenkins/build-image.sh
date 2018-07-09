@@ -1,4 +1,4 @@
 #!/bin/bash
 
-docker build -t gft/jenkins .
+docker build -t gft-jenkins/jenkins .
 
