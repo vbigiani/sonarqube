@@ -2,4 +2,6 @@
 
 docker build -t vbigiani/jenkins .
 
-sudo docker push vbigiani/jenkins
+docker login
+
+docker push vbigiani/jenkins
