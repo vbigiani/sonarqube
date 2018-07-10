@@ -3,7 +3,7 @@ FROM jenkins/jenkins:2.131
 USER root
 RUN apt-get update && apt-get install  -y --no-install-recommends  apt-transport-https  ca-certificates  curl  software-properties-common lsb-core
 
-RUN curl -fsSL https://apt.dockerproject.org/gpg | sudo apt-key add -
+RUN curl -fsSL https://apt.dockerproject.org/gpg | apt-key add -
 
 RUN add-apt-repository "deb https://apt.dockerproject.org/repo/ debian-$(lsb_release -cs) main"
        
