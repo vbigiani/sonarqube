@@ -15,7 +15,7 @@ objects:
   metadata:
     name: jenkins
   spec:
-    dockerImageRepository: gft/jenkins
+    dockerImageRepository: docker.io/vbigiani/jenkins
 - apiVersion: v1
   kind: Service
   metadata:
