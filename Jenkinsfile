@@ -7,6 +7,7 @@ pipeline {
     }
     stages {
         stage('Checkout') {
+        	agent none
             steps {
                 checkout([$class: 'GitSCM', branches: [[name: 'master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[ url: 'https://github.com/vbigiani/sonarqube.git']]]) 
             }
