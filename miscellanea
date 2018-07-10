@@ -34,6 +34,7 @@ su openshift creare progetto gft-jenkins e gft-sonarqube;
 	
 	alias oc='docker exec origin oc'
 	jenkins()  { docker exec `docker ps | grep jenkins_jenkins | awk '{ print $1; }'` $*; }
+	jenkins_priv()  { docker exec --privileged `docker ps | grep jenkins_jenkins | awk '{ print $1; }'` $*; }
 
 eseguire (da windows) build-image.sh per creare immagine di Jenkins configurata correttamente
 
