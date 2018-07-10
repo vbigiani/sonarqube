@@ -73,6 +73,10 @@ objects:
         - capabilities: {}
           image: jenkins
           imagePullPolicy: IfNotPresent
+          securityContext:
+            capabilities: {}
+            privileged: false
+            runAsUser: 0
           livenessProbe:
             httpGet:
               path: /login
@@ -89,12 +93,9 @@ objects:
           resources:
             limits:
               memory: ${MEMORY_LIMIT}
-          securityContext:
-            capabilities: {}
-            privileged: false
           terminationMessagePath: /dev/termination-log
           volumeMounts:
-          - mountPath: /var/jenkins_home
+          - mountPath: /var/jenkins_home__
             name: ${JENKINS_SERVICE_NAME}-data
           - mountPath: /var/run/docker.sock
             name: ${JENKINS_SERVICE_NAME}-docker-sock

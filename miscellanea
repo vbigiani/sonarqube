@@ -18,9 +18,14 @@ quando si riavvia virtualbox va eseguito:
 su openshift creare progetto gft-jenkins e gft-sonarqube;
 
 	minishift ssh
-	docker exec origin oc project gft-jenkins
-	docker exec origin oc adm policy add-scc-to-user hostaccess -z default
-	docker exec origin oc adm policy add-scc-to-user hostmount-anyuid -z default
+
+	alias oc='docker exec origin oc'
+	jenkins()  { docker exec `docker ps | grep jenkins_jenkins | awk '{ print $1; }'` $*; }
+	jenkins_priv()  { docker exec --privileged `docker ps | grep jenkins_jenkins | awk '{ print $1; }'` $*; }
+
+	oc project gft-jenkins
+	oc adm policy add-scc-to-user hostaccess -z default
+	oc adm policy add-scc-to-user hostmount-anyuid -z default
 
 
 
@@ -32,10 +37,6 @@ su openshift creare progetto gft-jenkins e gft-sonarqube;
 	./build-image.sh
 	
 	
-	alias oc='docker exec origin oc'
-	jenkins()  { docker exec `docker ps | grep jenkins_jenkins | awk '{ print $1; }'` $*; }
-	jenkins_priv()  { docker exec --privileged `docker ps | grep jenkins_jenkins | awk '{ print $1; }'` $*; }
-
 eseguire (da windows) build-image.sh per creare immagine di Jenkins configurata correttamente
 
 installare Jenkins.yaml e sonarqube.yaml.
