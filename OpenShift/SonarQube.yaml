@@ -125,6 +125,16 @@ objects:
           volumeMounts:
           - mountPath: /opt/sonarqube/data
             name: sonarqube-data
+            subPath: data
+          - mountPath: /opt/sonarqube/conf
+            name: sonarqube-data
+            subPath: conf
+          - mountPath: /opt/sonarqube/extensions
+            name: sonarqube-data
+            subPath: extensions
+          - mountPath: /opt/sonarqube/lib/bundled-plugins
+            name: sonarqube-data
+            subPath: lib/bundled-plugins
         dnsPolicy: ClusterFirst
         restartPolicy: Always
         securityContext: {}
