@@ -12,6 +12,7 @@ modificare in Virtualbox per portare la RAM a 4 GB
 
 quando si riavvia virtualbox va eseguito:
 	minishift ssh docker start origin
+	minishift ssh sudo sysctl -w vm.max_map_count=262144
 
 
 
@@ -26,14 +27,22 @@ su openshift creare progetto gft-jenkins e gft-sonarqube;
 	sonarqube_priv()  { docker exec --privileged `docker ps | grep sonarqube_sonarqube | awk '{ print $1; }'` $*; }
 	postgresql()  { docker exec `docker ps | grep postgresql_postgresql | awk '{ print $1; }'` $*; }
 	postgresql_priv()  { docker exec --privileged `docker ps | grep postgresql_postgresql | awk '{ print $1; }'` $*; }
+	elk()  { docker exec `docker ps | grep elk_elk | awk '{ print $1; }'` $*; }
+	elk_priv()  { docker exec --privileged `docker ps | grep elk_elk | awk '{ print $1; }'` $*; }
 
 	oc project gft-jenkins
 	oc adm policy add-scc-to-user hostaccess -z default
 	oc adm policy add-scc-to-user hostmount-anyuid -z default
 
+	oc project gft-elk
+	oc adm policy add-scc-to-user hostaccess -z default
+	oc adm policy add-scc-to-user hostmount-anyuid -z default
 
 
-	per ribuildare l'immagine di Jenkins:
+	
+
+
+per ribuildare l'immagine di Jenkins:
 	
 	sudo yum install git -y
 	git clone https://github.com/vbigiani/sonarqube.git

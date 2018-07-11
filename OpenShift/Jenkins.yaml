@@ -95,7 +95,7 @@ objects:
               memory: ${MEMORY_LIMIT}
           terminationMessagePath: /dev/termination-log
           volumeMounts:
-          - mountPath: /var/jenkins_home__
+          - mountPath: /var/jenkins_home
             name: ${JENKINS_SERVICE_NAME}-data
           - mountPath: /var/run/docker.sock
             name: ${JENKINS_SERVICE_NAME}-docker-sock

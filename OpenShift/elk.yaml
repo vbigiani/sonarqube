@@ -1,0 +1,145 @@
+kind: Template
+apiVersion: v1
+metadata:
+  annotations:
+    description: Elk
+    tags: instant-app,elk
+  name: elk
+objects:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: kibana
+  spec:
+    ports:
+    - name: kibana-web
+      port: 5601
+      protocol: TCP
+      targetPort: 5601
+    selector:
+      app: elk
+    sessionAffinity: None
+    type: ClusterIP
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: elasticsearch
+  spec:
+    ports:
+    - name: elasticsearch-web
+      port: 9200
+      protocol: TCP
+      targetPort: 9200
+    selector:
+      app: elk
+    sessionAffinity: None
+    type: ClusterIP
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: logstash
+  spec:
+    ports:
+    - name: logstash-web
+      port: 5044
+      protocol: TCP
+      targetPort: 5044
+    selector:
+      app: elk
+    sessionAffinity: None
+    type: ClusterIP
+- apiVersion: v1
+  kind: Route
+  metadata:
+    name: kibana
+  spec:
+    to:
+      kind: Service
+      name: kibana
+- apiVersion: v1
+  kind: Route
+  metadata:
+    name: elasticsearch
+  spec:
+    to:
+      kind: Service
+      name: elasticsearch
+- apiVersion: v1
+  kind: Route
+  metadata:
+    name: logstash
+  spec:
+    to:
+      kind: Service
+      name: logstash
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    labels:
+      app: elk
+    name: elk
+  spec:
+    dockerImageRepository: docker.io/sebp/elk
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    name: elasticsearch
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 10Gi
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    creationTimestamp: null
+    name: elk
+  spec:
+    replicas: 1
+    selector:
+      name: elk
+    strategy:
+      type: Recreate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          name: elk
+      spec:
+        containers:
+        - env:
+            - name: ES_CONNECT_RETRY
+              value: '60'
+          capabilities: {}
+          securityContext:
+            capabilities: {}
+            privileged: false
+            runAsUser: 0
+          image: elk
+          imagePullPolicy: IfNotPresent
+          name: elk
+          resources:
+            limits:
+              cpu: 1
+              memory: 3Gi
+          terminationMessagePath: /dev/termination-log
+          volumeMounts:
+          - mountPath: /var/lib/elasticsearch
+            name: elasticsearch-data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        volumes:
+        - name: elasticsearch-data
+          persistentVolumeClaim:
+            claimName: elasticsearch
+    triggers:
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - elk
+        from:
+          kind: ImageStreamTag
+          name: elk:latest
+      type: ImageChange
+    - type: ConfigChange
