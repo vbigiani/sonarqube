@@ -100,12 +100,12 @@
 
 	<distributionManagement>
 	    <repository>
-	        <id>local</id>
+	        <id>artifactory-local-docker</id>
 	        <name>artifactory-oss-1-pw6zh-releases</name>
 	        <url>http://artifactory-gft-artifactory.192.168.99.100.nip.io/libs-release-local</url>
 	    </repository>
 	    <snapshotRepository>
-	        <id>local</id>
+	        <id>artifactory-local-docker</id>
 	        <name>artifactory-oss-1-pw6zh-snapshots</name>
 	        <url>http://artifactory-gft-artifactory.192.168.99.100.nip.io/libs-snapshot-local</url>
 	    </snapshotRepository>

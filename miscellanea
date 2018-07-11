@@ -70,6 +70,7 @@ per fare login su Jenkins visualizzare i log su Openshift per trovare la passwor
 
 deployare su Artifactory: va creato e salvato sul proprio settings.xml le credenziali verso Artifactory. cfr.
 https://www.jfrog.com/confluence/display/RTF/Maven+Repository e https://little418.com/2009/07/maven-minimal-settingsxml-for-authenticated-repository.html
+il settings.xml va copiato su /var/lib/docker/volumes/mvn_repository/_data/ della VM per far funzionare la pipeline di deploy
 
 -----------------------------------
 

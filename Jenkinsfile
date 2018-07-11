@@ -47,7 +47,8 @@ pipeline {
                 }
             }
 		}
-        stage('Deliver') { 
+        stage('Deliver') {
+        	agent none
             steps {
                 sh 'mvn deploy' 
             }
