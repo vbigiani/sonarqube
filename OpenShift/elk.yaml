@@ -79,7 +79,7 @@ objects:
       app: elk
     name: elk
   spec:
-    dockerImageRepository: docker.io/sebp/elk
+    dockerImageRepository: docker.io/vbigiani/elk
 - apiVersion: v1
   kind: PersistentVolumeClaim
   metadata:

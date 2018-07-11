@@ -49,6 +49,13 @@ per ribuildare l'immagine di Jenkins:
 	cd sonarqube/docker/jenkins
 	./build-image.sh
 	
+per ribuildare l'immagine di elk:
+	
+	sudo yum install git -y
+	git clone https://github.com/vbigiani/sonarqube.git
+	cd sonarqube/docker/elk
+	./build-image.sh
+	
 	
 eseguire (da windows) build-image.sh per creare immagine di Jenkins configurata correttamente
 
