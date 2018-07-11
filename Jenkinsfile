@@ -47,10 +47,10 @@ pipeline {
                 }
             }
 		}
-//        stage('Deliver') { 
-//            steps {
-//                sh 'mvn deploy' 
-//            }
-//        }
+        stage('Deliver') { 
+            steps {
+                sh 'mvn deploy' 
+            }
+        }
     }
 }

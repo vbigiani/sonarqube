@@ -1,0 +1,112 @@
+kind: Template
+apiVersion: v1
+metadata:
+  annotations:
+    description: Artifactory
+    tags: instant-app,artifactory
+  name: artifactory
+objects:
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    name: artifactory-oss
+    labels:
+      app: artifactory-oss
+      component: artifactory-oss-server
+  spec:
+    strategy:
+      type: Recreate
+    triggers:
+      - type: ConfigChange
+    replicas: 1
+    selector:
+      app: artifactory-oss
+      component: artifactory-oss-server
+    template:
+      metadata:
+        labels:
+          app: artifactory-oss
+          component: artifactory-oss-server
+      spec:
+        containers:
+          - name: artifactory-oss
+            image: widerin/openshift-artifactory-oss:v5.3.2
+            ports:
+              - containerPort: 8080
+                protocol: TCP
+            resources:
+              limits:
+                cpu: 500m
+                memory: 1G
+              requests:
+                cpu: 100m
+                memory: 512M
+            volumeMounts:
+              - name: artifactory-oss-data
+                mountPath: /artifactory
+            livenessProbe:
+              tcpSocket:
+                port: 8080
+              initialDelaySeconds: 60
+              timeoutSeconds: 1
+              periodSeconds: 10
+              successThreshold: 1
+              failureThreshold: 3
+            readinessProbe:
+              httpGet:
+                path: /webapp/
+                port: 8080
+                scheme: HTTP
+              initialDelaySeconds: 60
+              timeoutSeconds: 1
+              periodSeconds: 10
+              successThreshold: 1
+              failureThreshold: 3
+            terminationMessagePath: /dev/termination-log
+            imagePullPolicy: Always
+        restartPolicy: Always
+        terminationGracePeriodSeconds: 30
+        dnsPolicy: ClusterFirst
+        securityContext:
+        # Change this if you want to bind a persistent volume claim
+        volumes:
+        - name: artifactory-oss-data
+          persistentVolumeClaim:
+            claimName: artifactory-oss
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    name: artifactory-oss
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 10Gi
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: artifactory-oss
+    labels:
+      app: artifactory-oss
+      component: service
+    annotations:
+      description: 'Exposes the artifactory-oss server'
+  spec:
+    ports:
+      - name: 8080-tcp
+        protocol: TCP
+        port: 8080
+        targetPort: 8080
+    selector:
+      app: artifactory-oss
+      component: artifactory-oss-server
+- apiVersion: v1
+  kind: Route
+  metadata:
+    name: artifactory
+  spec:
+    to:
+      kind: Service
+      name: artifactory-oss
+      

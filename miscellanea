@@ -16,7 +16,7 @@ quando si riavvia virtualbox va eseguito:
 
 
 
-su openshift creare progetto gft-jenkins e gft-sonarqube;
+su openshift creare progetto gft-jenkins e gft-sonarqube gft-elk gft-artifactory;
 
 	minishift ssh
 
@@ -64,9 +64,12 @@ per ribuildare l'immagine di elk:
 	
 eseguire (da windows) build-image.sh per creare immagine di Jenkins configurata correttamente
 
-installare Jenkins.yaml e sonarqube.yaml.
+installare Jenkins.yaml e sonarqube.yaml elk.yaml artifactory.yaml.
 
 per fare login su Jenkins visualizzare i log su Openshift per trovare la password.
+
+deployare su Artifactory: va creato e salvato sul proprio settings.xml le credenziali verso Artifactory. cfr.
+https://www.jfrog.com/confluence/display/RTF/Maven+Repository e https://little418.com/2009/07/maven-minimal-settingsxml-for-authenticated-repository.html
 
 -----------------------------------
 
