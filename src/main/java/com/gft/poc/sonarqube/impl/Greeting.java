@@ -21,4 +21,14 @@ public class Greeting {
 		log.debug("Greeting for {}", name);
 		return "Hello, " + name + "!";
 	}
+	
+	@RequestMapping("/error/{name}")
+	public String error(@PathVariable String name) {
+		try {
+			throw new IllegalArgumentException(name);
+		} catch (IllegalArgumentException e) {
+			log.error("error: ", e);
+			throw e;
+		}
+	}
 }

@@ -20,4 +20,9 @@ public class GreetingTests {
 
 		Assert.assertEquals("Hello, Franco!", greeting.getGreeting("Franco"));
 	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testError() {
+		greeting.error("pippo");
+	}
 }
