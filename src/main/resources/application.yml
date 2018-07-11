@@ -8,3 +8,8 @@ spring:
 info.app:
   name: Sonarqube POC
   version: 0.0.1
+
+logging:
+  config: src/main/resources/logback.xml
+  path: logs/sonarqube
+  file: sonarqube

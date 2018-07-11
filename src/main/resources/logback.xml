@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+<!--     <include resource="org/springframework/boot/logging/logback/base.xml" /> -->
+<!--     <include resource="org/springframework/boot/logging/logback/defaults.xml" /> -->
+
+    <!--APPENDER CONFIGURATION FOR CONSOLE LOGGING -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${PID}: %-5level [%thread] %logger{0} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <property name="LOG_PATH" value="logs" ></property>
+
+    <!-- APPENDERS DEFINITION -->
+    <appender name="LOG_SERVICE"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/${LOG_FILE}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>${LOG_PATH}/${LOG_FILE}.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>50MB</maxFileSize>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>500MB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>
+                %d|%p|applicazione=sonarqube|componente=prova|idCorrelazione=%X{requestId}|CLASS=%c|message=%replace(%msg){'\b([0]*)(([245]){1}\d{5})(\d{2})(\d{4})(\d{4})\b','$1$2******$6'}%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <!--START ASYNC APPENDERS DEFINITION -->
+    <appender name="ASYNC_DEFAULT_FILE" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="console" />
+    </appender>
+    <!--START ASYNC APPENDERS DEFINITION -->
+    <appender name="ASYNC_LOG_SERVICE" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="LOG_SERVICE" />
+    </appender>
+    <!--END ASYNC APPENDERS DEFINITION -->
+
+       <logger name="com.gft" level="DEBUG"  additivity="false" >
+           <appender-ref ref="ASYNC_LOG_SERVICE" />
+       </logger>
+
+    <root level="INFO">
+        <appender-ref ref="console" />
+        <appender-ref ref="ASYNC_LOG_SERVICE" />
+    </root>
+</configuration>
