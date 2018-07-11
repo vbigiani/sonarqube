@@ -39,7 +39,12 @@ su openshift creare progetto gft-jenkins e gft-sonarqube;
 	oc adm policy add-scc-to-user hostmount-anyuid -z default
 
 
-	
+
+da https://elk-docker.readthedocs.io/#
+	 sudo docker exec -it `docker ps | grep elk_elk | awk '{ print $1; }'` /bin/bash
+		al prompt:
+	/opt/logstash/bin/logstash --path.data /tmp/logstash/data  -e 'input { stdin { } } output { elasticsearch { hosts => ["localhost"] } }'
+		attendere che si carichi e scrivere qualcosa
 
 
 per ribuildare l'immagine di Jenkins:
